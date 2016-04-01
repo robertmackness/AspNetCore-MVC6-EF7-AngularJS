@@ -1,0 +1,34 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>The World - @ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <div id="sidebar">
+        <img src="~/img/hagar.jpg" alt="Headshot" class="headshot" />
+        <span id="username">Hagar</span>
+        <ul class="menu">
+            <li><a asp-controller="App" asp-action="Index">Home</a></li>
+            <li><a asp-controller="App" asp-action="About">About</a></li>
+            <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <div id="wrapper">
+        <div id="main">
+            <div><button id="sidebarToggle">Hide Sidebar</button></div>
+            <div>@RenderBody()</div>
+        </div>
+        <div id="footer">&copy; R Mackness</div>
+    </div>
+
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/site.js"></script>
+
+    @RenderSection("Scripts", false)
+</body>
+</html>

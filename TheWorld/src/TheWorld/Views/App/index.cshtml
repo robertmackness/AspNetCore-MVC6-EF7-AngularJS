@@ -1,49 +1,18 @@
-﻿@{ 
-    ViewBag.Title = "Home page";
+﻿@{
+    ViewBag.Title = "Home Page";
 }
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>The World - @ViewBag.Title</title>
-    <link rel="stylesheet" href="css/site.css" />
-</head>
-<body>
-
-    <div id="sidebar">
-        <img src="img/hagar.jpg" alt="Headshot" class="headshot" />
-        <span id="username">Hagar</span>
-        <ul class="menu">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
+<h1>Hello World</h1>
+<p>This is gonna be sweet</p>
+<form>
+    <div>
+        <label>Date</label>
+        <input />
     </div>
-
-    <div id="wrapper">
-        <div id="main">
-            <div><button id="sidebarToggle">Hide Sidebar</button></div>
-            <h1>Hello World</h1>
-            <p>This is gonna be sweet</p>
-            <form>
-                <div>
-                    <label>Date</label>
-                    <input />
-                </div>
-                <div>
-                    <label>Location</label>
-                    <input />
-                </div>
-                <div><input type="submit" value="Add" /></div>
-            </form>
-        </div>
-        <div id="footer">&copy; R Mackness</div>
+    <div>
+        <label>Location</label>
+        <input />
     </div>
-
-    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="js/site.js"></script>
-
-</body>
-</html>
+    <div><input type="submit" value="Add" /></div>
+</form>
