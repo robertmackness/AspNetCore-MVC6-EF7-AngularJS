@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,37 +9,72 @@ using System.Threading.Tasks;
 using TheWorld.Models;
 using TheWorld.ViewModels;
 
+// This Controller doesn't return IActionView implementations, it returns JsonResult as it's interacting
+// with the database. Key Features include:
+//  1.  Default Route Metadata
+//      Setting default route matches using [Route()] metadata for the entire controller, so that Actions
+//      can use this as default. We're building a RESTful API so the route is the same but the Http methods change.
+//  2.  AutoMapper
+//      We're using the AutoMapper NuGet Package to map from a ViewModel to a real data Model, taking the values across
+
 namespace TheWorld.Controllers.Api
 {
+    //  1.  Default Route Metadata
+    //      Setting default route matches using [Route()] metadata for the entire controller, so that Actions
+    //      can use this as default. We're building a RESTful API so the route is the same but the Http methods change.
     [Route("api/trips")]
     public class TripController : Controller
     {
+        private ILogger<TripController> _logger;
         private IWorldRepository _repository;
 
-        public TripController(IWorldRepository repository)
+        public TripController(IWorldRepository repository, ILogger<TripController> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         [HttpGet("")]
         public JsonResult Get()
         {
-            var results = _repository.GetAllTripsWithStops();
+            // Don't return the full Trip model data, use Mapper to map it across to the TripViewModel
+            // Note that _repository.GetAllTripsWithStops() returns an IEnumerable implementation, so
+            // we have to give Mapper that information
+            var results = Mapper.Map<IEnumerable<TripViewModel>>(_repository.GetAllTripsWithStops());
             return Json(results);
         }
 
         [HttpPost("")]
-        public JsonResult Post([FromBody]TripViewModel newTrip)
+        public JsonResult Post([FromBody]TripViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Response.StatusCode = (int)HttpStatusCode.Created;
-                return Json(true);
+                if (ModelState.IsValid)
+                {
+                    //  2.  AutoMapper
+                    //      We're using the AutoMapper NuGet Package to map from a ViewModel to a real data Model, taking the values across
+                    var newTrip = Mapper.Map<Trip>(viewModel);
+                    // Here we queue up the new Trip for the repository to handle while sending a Information Log to the sytem
+                    _logger.LogInformation("Attempting to save new Trip to the database", newTrip);
+                    _repository.AddTrip(newTrip);
+
+                    // _repository.SaveAll() returns a boolean if all newly added items have been saved to the DB successfully
+                    // this pattern will allow us to add more models to the repository to handle before calling a save, meaning less
+                    // overhead on the DB
+                    if (_repository.SaveAll())
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.Created;
+                        return Json(Mapper.Map<TripViewModel>(newTrip));
+                    }
+                    
+                }
+                return Json(new { Message = "Model invalid" });
             }
-            else
+            catch (Exception ex)
             {
+                _logger.LogError("Failed to save trip", ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(new { Message = "failed", ModelState = ModelState});
+                return Json(new { Message = ex.Message });
             }
         }
     }

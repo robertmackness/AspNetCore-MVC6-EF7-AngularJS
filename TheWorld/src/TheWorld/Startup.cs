@@ -12,6 +12,9 @@ using Microsoft.Extensions.PlatformAbstractions;
 using TheWorld.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using AutoMapper;
+using TheWorld.ViewModels;
+using TheWorld.Controllers.Api;
 
 
 // This file is the entry point into the App. 
@@ -88,17 +91,25 @@ namespace TheWorld
         public void Configure(IApplicationBuilder app, WorldContextSeedData seeder, ILoggerFactory loggerFactory)
         {
             // Middleware - called sequentially, order is important!!
-            // For systems logs
+            // LOGGING - For systems logs
             loggerFactory.AddDebug(LogLevel.Warning);
-            // For serving static files e.g. src="~/css/site.css"
-            app.UseStaticFiles(); 
-            // MVC6 config - breaks down a route into the controller, action(method on controller) and id(optional)
-            app.UseMvc(config => 
+            // STATIC FILES - For serving static files e.g. src="~/css/site.css"
+            app.UseStaticFiles();
+            // AUTOMAPPER - Using AutoMapper NuGet package to map viewmodels to models in our controller - notably the API
+            //              Note that you don't need to specify collections containing models here, most of them come bundled
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Trip, TripViewModel>().ReverseMap();
+                config.CreateMap<Stop, StopViewModel>().ReverseMap();
+            });
+            // MVC6 CONFIG - breaks down a route into the controller, action(method on controller) and id(optional)
+            app.UseMvc(config =>
             {
                 config.MapRoute(
                     name: "Default",
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "App", action = "Index" }
+                    
                 );
             });
             // This is just a development tool we created to ensure that if the database is empty, seed some data into it.
