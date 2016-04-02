@@ -1,5 +1,8 @@
 {
   "AppSettings": {
-    "SiteEmailAddress":  "robert@mackness.io"
+    "SiteEmailAddress": "robert@mackness.io"
+  },
+  "Data": {
+    "WorldContextConnection": "Server=(localdb)\\ProjectsV13;Database=TheWorldDB;Trusted_Connection=true;MultipleActiveResultSets=true;"
   }
 }

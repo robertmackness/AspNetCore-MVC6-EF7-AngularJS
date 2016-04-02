@@ -5,25 +5,56 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using TheWorld.ViewModels;
 using TheWorld.Services;
+using TheWorld.Models;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
+// This is our main AppController, which the http pipeline defaults to if other controllers and actions are not specified.
+// MVC 6 knows to look for this controller because of the directory structure, and naming of the class.
+// It inherits from AspNet.Mvc.Controller to give it out-of-the-box functionality.
+//
+// Key parts:
+// 1.  Constructor. 
+//     Using dependency injection to grabs an IMailService interface, the concrete implementation it gets depends on the
+//     Startup.cs if block concerning whether the app is running in DEBUG mode or not.
+//     It also gets an IWorldRepository interface implementation from Startup.cs for interacting with the database.
+//
+// 2. IActionResults.
+//    These are AspNet.Mvc interfaces that you can customise. These are called from the routes defined in Startup.Configure().
+//    The views which they return are methods which return a rendered view to the client, and these map to ~/Views/*.cshtml with a
+//    matching name.
+//    It's possible to attach metadata to the Action, e.g. [HttpPost] which can be matched by AspNet.Mvc using reflection, for finer
+//    control over matching routes.
+//
+// 3. ViewModels
+//    These are stripped down versions you create of your data models that don't expose the full model to the client
+//    E.g.: You would omit id and created_at fields because these could be generated server-side.
+//    These are also useful for data validation using metadata and reflection e.g.: [Required] [StringLength(255, MinimumLength =3)]
 
 namespace TheWorld.Controllers.Web
 {
     public class AppController : Controller
     {
         private IMailService _mailService;
+        private IWorldRepository _repository;
 
-        // Constructor
-        public AppController(IMailService service)
+        // 1.  Constructor. 
+        //     Using dependency injection to grabs an IMailService interface, the concrete implementation it gets depends on the
+        //     Startup.cs if block concerning whether the app is running in DEBUG mode or not.
+        //     It also gets an IWorldRepository interface implementation from Startup.cs for interacting with the database
+        public AppController(IMailService service, IWorldRepository repository)
         {
             _mailService = service;
+            _repository = repository;
         }
-        // GET: /<controller>/action
-        // These all return the correspondingly named cshtml file in the View/App folder
+
+        // 2. IActionResults.
+        //    These are AspNet.Mvc interfaces that you can customise. These are called from the routes defined in Startup.Configure().
+        //    The views which they return are methods which return a rendered view to the client, and these map to ~/Views/*.cshtml with a
+        //    matching name.
         public IActionResult Index()
         {
-            return View();
+            var trips = _repository.GetAllTrips();
+            return View(trips);
         }
         public IActionResult About()
         {
@@ -33,19 +64,27 @@ namespace TheWorld.Controllers.Web
         {
             return View();
         }
-        [HttpPost]
+
+        // 3. ViewModels
+        //    These are stripped down versions you create of your data models that don't expose the full model to the client
+        //    E.g.: You would omit id and created_at fields because these could be generated server-side.
+        //    These are also useful for data validation using metadata and reflection e.g.: [Required] [StringLength(255, MinimumLength =3)]
+        [HttpPost] // Attach metadata to this IActionResult signifying this Action should match /App/Contact with method: Post
         public IActionResult Contact(ContactViewModel model)
         {
-            if(ModelState.IsValid)
+            // this is an AspNet.Mvc value, it checks if there are any errors on submitted values in ModelStateDictionary
+            // It uses the view model provided on the contact page, which references ContactViewModel, which has fields
+            // assigned various metadata
+            if (ModelState.IsValid) 
             {
-                var email = Startup.Configuration["AppSettings:SiteEmailAddress"];
+                var email = Startup.Configuration["AppSettings:SiteEmailAddress"]; // Startup.Configuration points to ~/config.json via IConfigurationRoot implementation
                 _mailService.SendMail(
                     email,
                     email,
-                    $"Contact Page from {model.Name} ({model.Email})",
+                    $"Sent from contact Page by {model.Name} ({model.Email})",
                     model.Message
                 );
-                ModelState.Clear();
+                ModelState.Clear(); // Clear out the ModelState
                 ViewBag.Message = "Mail Sent. Thanks.";
             }
             return View();

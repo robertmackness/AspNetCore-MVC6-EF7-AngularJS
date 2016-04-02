@@ -1,18 +1,5 @@
 /** css/site.css*/
-body{
-    font-family: sans-serif;
-    font-size: 1rem;
-    margin: 0;
-}
 
-label{
-    font-weight:bold;
-    display: block;
-}
-
-input[type=text], input[type=password], textarea{
-    width: 150px;
-}
 
 #wrapper{
     margin-left: 20%;
@@ -26,16 +13,7 @@ input[type=text], input[type=password], textarea{
     }
 
 #main{
-    background-color:lightgrey;
-}
-
-#footer{
-    background-color: #000000;
-    color: #eee;
-    padding: 8px 3px 8px 3px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    padding: 0;
 }
 
 .headshot{
