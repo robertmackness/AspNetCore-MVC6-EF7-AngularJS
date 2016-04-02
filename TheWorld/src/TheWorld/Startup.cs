@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.PlatformAbstractions;
 using TheWorld.Models;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 
 // This file is the entry point into the App. 
@@ -56,7 +57,11 @@ namespace TheWorld
         //       You can add predefined services within the MS Stack or your own using Add(scoped/transient/etc)
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(opt => // We want to return our Json objects in camelcase
+                {
+                    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
             // Tell our App to used EF7 alongside Sql and to use our WorldContext for Tables/Properties.
             services.AddEntityFramework()
                 .AddSqlServer()

@@ -17,7 +17,7 @@ namespace TheWorld.Models
 
         public void EnsureSeedData()
         {
-            if (! _context.Trips.Any())
+            if (!_context.Trips.Any())
             {
                 var usTrip = new Trip()
                 {
@@ -36,6 +36,7 @@ namespace TheWorld.Models
                 };
 
                 _context.Trips.Add(usTrip);
+                _context.Stops.AddRange(usTrip.Stops);
 
                 var worldTrip = new Trip()
                 {
@@ -103,8 +104,11 @@ namespace TheWorld.Models
                  }
                 };
                 _context.Trips.Add(worldTrip);
+                _context.Stops.AddRange(worldTrip.Stops);
                 _context.SaveChanges();
             }
+            
+
         }
     }
 }
