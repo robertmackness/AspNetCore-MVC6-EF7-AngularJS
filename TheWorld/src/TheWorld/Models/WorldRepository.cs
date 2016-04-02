@@ -6,6 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// The Repository Pattern
+// This is used to control and manage all of your database interactions in one location, to avoid dispersed calls to the DB
+// and to adhere to the Do Not Repeat Yourself principle.
+
 namespace TheWorld.Models
 {
     public class WorldRepository : IWorldRepository

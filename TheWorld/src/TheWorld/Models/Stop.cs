@@ -2,6 +2,7 @@
 
 namespace TheWorld.Models
 {
+    // This class will eventually be used as a DbSet in a DbContext in WorldContext
     public class Stop
     {
         public int Id { get; set; }

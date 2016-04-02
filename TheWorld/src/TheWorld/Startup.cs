@@ -57,6 +57,7 @@ namespace TheWorld
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            // Tell our App to used EF7 alongside Sql and to use our WorldContext for Tables/Properties.
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<WorldContext>();
