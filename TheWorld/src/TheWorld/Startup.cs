@@ -72,7 +72,7 @@ namespace TheWorld
             services.AddTransient<WorldContextSeedData>();
             services.AddScoped<IWorldRepository, WorldRepository>();
             services.AddLogging();
-
+            services.AddScoped<CoordService>();
             // This strangely formatted if block checks to see if the application is running in DEBUG mode, as opposed to production.
             // If it is, use our DebugMailService which is a concrete implementation of the IMailService interface we defined, otherwise
             // use the as-yet-implemented MailService.

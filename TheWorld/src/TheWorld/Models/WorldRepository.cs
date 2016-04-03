@@ -23,6 +23,14 @@ namespace TheWorld.Models
             _logger = logger;
         }
 
+        public void AddStop(Stop newStop, string tripName)
+        {
+            var theTrip = GetTripByName(tripName);
+            newStop.Order = theTrip.Stops.Max(s => s.Order) + 1;
+            theTrip.Stops.Add(newStop);
+            _context.Add(newStop);
+        }
+
         public void AddTrip(Trip newTrip)
         {
             _context.Add(newTrip);
