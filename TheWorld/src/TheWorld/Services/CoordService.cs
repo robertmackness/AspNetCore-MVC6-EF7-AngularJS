@@ -64,3 +64,230 @@ namespace TheWorld.Services
         }
     }
 }
+
+// EXAMPLE Bing Maps Object
+//{
+//  "authenticationResultCode": "ValidCredentials",
+//  "brandLogoUri": "http://dev.virtualearth.net/Branding/logo_powered_by.png",
+//  "copyright": "Copyright © 2016 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.",
+//  "resourceSets": [
+//    {
+//      "estimatedTotal": 5,
+//      "resources": [
+//        {
+//          "__type": "Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+//          "bbox": [
+//            25.451837539672852,
+//            -80.832115173339844,
+//            26.144598007202148,
+//            -79.587150573730469
+//          ],
+//          "name": "Miami, FL",
+//          "point": {
+//            "type": "Point",
+//            "coordinates": [
+//              25.774810791015625,
+//              -80.1977310180664
+//            ]
+//          },
+//          "address": {
+//            "adminDistrict": "FL",
+//            "adminDistrict2": "Miami-Dade Co.",
+//            "countryRegion": "United States",
+//            "formattedAddress": "Miami, FL",
+//            "locality": "Miami"
+//          },
+//          "confidence": "High",
+//          "entityType": "PopulatedPlace",
+//          "geocodePoints": [
+//            {
+//              "type": "Point",
+//              "coordinates": [
+//                25.774810791015625,
+//                -80.1977310180664
+//              ],
+//              "calculationMethod": "Rooftop",
+//              "usageTypes": [
+//                "Display"
+//              ]
+//            }
+//          ],
+//          "matchCodes": [
+//            "Good"
+//          ]
+//        },
+//        {
+//          "__type": "Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+//          "bbox": [
+//            25.747062683105469,
+//            -80.226043701171875,
+//            25.850976943969727,
+//            -80.039291381835938
+//          ],
+//          "name": "Miami Beach, FL",
+//          "point": {
+//            "type": "Point",
+//            "coordinates": [
+//              25.793350219726563,
+//              -80.1349105834961
+//            ]
+//          },
+//          "address": {
+//            "adminDistrict": "FL",
+//            "adminDistrict2": "Miami-Dade Co.",
+//            "countryRegion": "United States",
+//            "formattedAddress": "Miami Beach, FL",
+//            "locality": "Miami Beach"
+//          },
+//          "confidence": "High",
+//          "entityType": "PopulatedPlace",
+//          "geocodePoints": [
+//            {
+//              "type": "Point",
+//              "coordinates": [
+//                25.793350219726563,
+//                -80.1349105834961
+//              ],
+//              "calculationMethod": "Rooftop",
+//              "usageTypes": [
+//                "Display"
+//              ]
+//            }
+//          ],
+//          "matchCodes": [
+//            "Good"
+//          ]
+//        },
+//        {
+//          "__type": "Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+//          "bbox": [
+//            36.827018737792969,
+//            -94.97979736328125,
+//            36.927467346191406,
+//            -94.776618957519531
+//          ],
+//          "name": "Miami, OK",
+//          "point": {
+//            "type": "Point",
+//            "coordinates": [
+//              36.874038696289063,
+//              -94.8775634765625
+//            ]
+//          },
+//          "address": {
+//            "adminDistrict": "OK",
+//            "adminDistrict2": "Ottawa Co.",
+//            "countryRegion": "United States",
+//            "formattedAddress": "Miami, OK",
+//            "locality": "Miami"
+//          },
+//          "confidence": "High",
+//          "entityType": "PopulatedPlace",
+//          "geocodePoints": [
+//            {
+//              "type": "Point",
+//              "coordinates": [
+//                36.874038696289063,
+//                -94.8775634765625
+//              ],
+//              "calculationMethod": "Rooftop",
+//              "usageTypes": [
+//                "Display"
+//              ]
+//            }
+//          ],
+//          "matchCodes": [
+//            "Good"
+//          ]
+//        },
+//        {
+//          "__type": "Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+//          "bbox": [
+//            33.3890495300293,
+//            -110.88050079345703,
+//            33.412857055664062,
+//            -110.85221862792969
+//          ],
+//          "name": "Miami, AZ",
+//          "point": {
+//            "type": "Point",
+//            "coordinates": [
+//              33.398521423339844,
+//              -110.87055206298828
+//            ]
+//          },
+//          "address": {
+//            "adminDistrict": "AZ",
+//            "adminDistrict2": "Gila Co.",
+//            "countryRegion": "United States",
+//            "formattedAddress": "Miami, AZ",
+//            "locality": "Miami"
+//          },
+//          "confidence": "High",
+//          "entityType": "PopulatedPlace",
+//          "geocodePoints": [
+//            {
+//              "type": "Point",
+//              "coordinates": [
+//                33.398521423339844,
+//                -110.87055206298828
+//              ],
+//              "calculationMethod": "Rooftop",
+//              "usageTypes": [
+//                "Display"
+//              ]
+//            }
+//          ],
+//          "matchCodes": [
+//            "Good"
+//          ]
+//        },
+//        {
+//          "__type": "Location:http://schemas.microsoft.com/search/local/ws/rest/v1",
+//          "bbox": [
+//            35.685298919677734,
+//            -100.6455078125,
+//            35.699836730957031,
+//            -100.63021850585937
+//          ],
+//          "name": "Miami, TX",
+//          "point": {
+//            "type": "Point",
+//            "coordinates": [
+//              35.691818237304688,
+//              -100.63854217529297
+//            ]
+//          },
+//          "address": {
+//            "adminDistrict": "TX",
+//            "adminDistrict2": "Roberts Co.",
+//            "countryRegion": "United States",
+//            "formattedAddress": "Miami, TX",
+//            "locality": "Miami"
+//          },
+//          "confidence": "High",
+//          "entityType": "PopulatedPlace",
+//          "geocodePoints": [
+//            {
+//              "type": "Point",
+//              "coordinates": [
+//                35.691818237304688,
+//                -100.63854217529297
+//              ],
+//              "calculationMethod": "Rooftop",
+//              "usageTypes": [
+//                "Display"
+//              ]
+//            }
+//          ],
+//          "matchCodes": [
+//            "Good"
+//          ]
+//        }
+//      ]
+//    }
+//  ],
+//  "statusCode": 200,
+//  "statusDescription": "OK",
+//  "traceId": "3aff533a95df4dfbb5baf0a726ceb9ae|DB40061020|02.00.153.3000|CO3SCH010265408, CO3SCH010265516, CO3SCH010265217"
+//}

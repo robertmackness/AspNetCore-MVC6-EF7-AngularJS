@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,6 +23,7 @@ namespace TheWorld.Controllers.Api
     //  1.  Default Route Metadata
     //      Setting default route matches using [Route()] metadata for the entire controller, so that Actions
     //      can use this as default. We're building a RESTful API so the route is the same but the Http methods change.
+    [Authorize]
     [Route("api/trips")]
     public class TripController : Controller
     {
@@ -40,7 +42,8 @@ namespace TheWorld.Controllers.Api
             // Don't return the full Trip model data, use Mapper to map it across to the TripViewModel
             // Note that _repository.GetAllTripsWithStops() returns an IEnumerable implementation, so
             // we have to give Mapper that information
-            var results = Mapper.Map<IEnumerable<TripViewModel>>(_repository.GetAllTripsWithStops());
+            var trips = _repository.GetUserTripsWithStops(User.Identity.Name);
+            var results = Mapper.Map <IEnumerable<TripViewModel>>(trips);
             return Json(results);
         }
 
@@ -54,6 +57,9 @@ namespace TheWorld.Controllers.Api
                     //  2.  AutoMapper
                     //      We're using the AutoMapper NuGet Package to map from a ViewModel to a real data Model, taking the values across
                     var newTrip = Mapper.Map<Trip>(viewModel);
+                    // Set the new trip's username to the currently logged in user.  we can make this assumption as the entire TripController only gets
+                    // called if the Identity service recoginises that a user has logged in and is therefore [Authorize]'d
+                    newTrip.UserName = User.Identity.Name;
                     // Here we queue up the new Trip for the repository to handle while sending a Information Log to the sytem
                     _logger.LogInformation("Attempting to save new Trip to the database", newTrip);
                     _repository.AddTrip(newTrip);

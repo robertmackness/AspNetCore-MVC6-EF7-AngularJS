@@ -39,7 +39,7 @@ namespace TheWorld.Controllers.Api
         {
             try
             {
-                var results = _repository.GetTripByName(tripName);
+                var results = _repository.GetTripByName(tripName, User.Identity.Name);
                 if(results == null)
                 {
                     return Json(new { Message = "None found"});
@@ -74,7 +74,7 @@ namespace TheWorld.Controllers.Api
                         newStop.Latitude = coordResult.Latitude;
                     }
                     // 3. Save to the database
-                    _repository.AddStop(newStop, tripName);
+                    _repository.AddStop(newStop, tripName, User.Identity.Name);
                     if (_repository.SaveAll())
                     {
                         Response.StatusCode = (int) HttpStatusCode.Created;

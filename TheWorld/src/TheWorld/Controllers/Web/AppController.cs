@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using TheWorld.ViewModels;
 using TheWorld.Services;
 using TheWorld.Models;
+using Microsoft.AspNet.Authorization;
 
 
 // This is our main AppController, which the http pipeline defaults to if other controllers and actions are not specified.
@@ -53,8 +54,7 @@ namespace TheWorld.Controllers.Web
         //    matching name.
         public IActionResult Index()
         {
-            var trips = _repository.GetAllTrips();
-            return View(trips);
+            return View();
         }
         public IActionResult About()
         {
@@ -88,6 +88,13 @@ namespace TheWorld.Controllers.Web
                 ViewBag.Message = "Mail Sent. Thanks.";
             }
             return View();
+        }
+
+        [Authorize]
+        public IActionResult Trips()
+        {
+            var trips = _repository.GetAllTrips();
+            return View(trips);
         }
     }
 }

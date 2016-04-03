@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 
 namespace TheWorld.Models
@@ -12,7 +13,7 @@ namespace TheWorld.Models
     // in this case the World with it's Trips and Stops.
     // During Startup.ConfigureServices() we add the EntityFramework, add a Sql server, then add this context to the DB.
 
-    public class WorldContext : DbContext
+    public class WorldContext : IdentityDbContext<WorldUser>
     {
         // Add the DbSets to this context 
         public DbSet<Trip> Trips { get; set; }

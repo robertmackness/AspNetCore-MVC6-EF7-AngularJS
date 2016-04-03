@@ -10,7 +10,7 @@ namespace TheWorld.ViewModels
     public class TripViewModel
     {
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
 		[StringLength(255, MinimumLength =5)]
