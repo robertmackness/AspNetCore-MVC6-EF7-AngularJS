@@ -73,7 +73,9 @@ namespace TheWorld.Controllers.Api
                         newStop.Longitude = coordResult.Longitude;
                         newStop.Latitude = coordResult.Latitude;
                     }
-                    // 3. Save to the database
+                    // 5. Format the date string
+
+                    // 4. Save to the database
                     _repository.AddStop(newStop, tripName, User.Identity.Name);
                     if (_repository.SaveAll())
                     {

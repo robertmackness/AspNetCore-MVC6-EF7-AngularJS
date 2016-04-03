@@ -9,6 +9,8 @@
     "bootstrap": "~3.3.6",
     "font-awesome": "~4.5.0",
     "bootswatch": "3.3.6+1",
-    "angular": "~1.5.3"
+    "angular": "~1.5.3",
+    "angular-route": "~1.5.3",
+    "travelmap": "~1.0.2"
   }
 }

@@ -1,0 +1,43 @@
+<div>
+    <div>
+        <a href="#/" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i>Back</a>
+    </div>
+    <div class="col-md-3">
+        <h2>{{viewModel.tripName}}</h2>
+        <wait-cursor display-when="viewModel.isBusy"></wait-cursor>
+        <div class="alert alert-danger" data-ng-show="viewModel.errorMessage">{{viewModel.errorMessage}}</div>
+
+        <form novalidate name="newStopForm" ng-submit="viewModel.addStop()">
+            <div class="form-group">
+                <label>Date</label>
+                <input class="form-control" id="arrival" name="arrival" 
+                       data-ng-model="viewModel.newStop.arrival" 
+                       data-ng-pattern="/^(\d{2})\/(\d{2})\/(\d{4})$/" required/>
+                <span class="text-danger" data-ng-show="newStopForm.arrival.$error.required">Required</span>
+                <span class="text-danger" data-ng-show="newStopForm.arrival.$error.pattern">Format must be dd/mm/yyyy.</span>
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input class="form-control" id="name" name="name" data-ng-model="viewModel.newStop.name" ng-minlength="3" required/>
+                <span class="text-danger" data-ng-show="newStopForm.name.$error.required">Required</span>
+                <span class="text-danger" data-ng-show="newStopForm.name.$error.minlength">Minimum Length is 3 characters or more</span>
+            </div>
+            <div><input type="submit" value="Add" class="btn btn-success" data-ng-disabled="newStopForm.$invalid"/></div>
+        </form>
+
+        <table class="table table-responsive table-striped">
+            <tr>
+                <th>Location</th>
+                <th>Arrival</th>
+            </tr>
+            <tr ng-repeat="stop in viewModel.stops">
+                <td>{{stop.name}}</td>
+                <td>{{stop.arrival | date:'dd MMM yyyy'}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-9">
+        <h2>The Map</h2>
+        <div id="map"></div>
+    </div>
+</div>
