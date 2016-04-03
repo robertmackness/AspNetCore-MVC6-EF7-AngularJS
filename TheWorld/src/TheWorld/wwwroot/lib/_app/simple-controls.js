@@ -1,0 +1,1 @@
+!function(){"use strict";function t(){return{restrict:"E",templateUrl:"/views/waitCursor.html",scope:{displayWhen:"="}}}angular.module("simpleControls",[]).directive("waitCursor",t)}();

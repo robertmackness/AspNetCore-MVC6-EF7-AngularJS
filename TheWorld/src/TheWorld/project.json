@@ -41,5 +41,10 @@
   "publishExclude": [
     "**.user",
     "**.vspscc"
-  ]
+  ],
+
+  "scripts": {
+    "prepublish": [ "npm install", "bower install" ],
+    "prepare": "gulp minify"
+  }
 }

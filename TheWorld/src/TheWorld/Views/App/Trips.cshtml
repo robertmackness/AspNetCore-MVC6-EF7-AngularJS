@@ -8,10 +8,20 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="~/lib/gmaps/gmaps.min.js"></script>
     <script src="~/lib/travelmap/travelmap.min.js"></script>
+
+<environment names="Development">
     <script src="~/js/app-trips.js"></script>
     <script src="~/js/tripsController.js"></script>
     <script src="~/js/simple-controls.js"></script>
     <script src="~/js/tripEditorController.js"></script>
+</environment>
+<environment names="Production,Staging">
+    <script src="~/lib/_app/app-trips.js"></script>
+    <script src="~/lib/_app/tripsController.js"></script>
+    <script src="~/lib/_app/simple-controls.js"></script>
+    <script src="~/lib/_app/tripEditorController.js"></script>
+</environment>
+
 
 }
 <div id="trips-container" class="row" data-ng-app="app-trips">

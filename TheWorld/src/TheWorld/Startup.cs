@@ -119,11 +119,24 @@ namespace TheWorld
         //       This is called by the runtime after ConfigureServices() and is able to use those services.
         //       ASP.NET uses dependency injection to get those services, so you can then go on to configure them.
         //       This is like defining your middleware in Express, creating your HTTP pipeline.
-        public async void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, WorldContextSeedData seeder)
+        public async void Configure(IApplicationBuilder app, 
+                                    ILoggerFactory loggerFactory, 
+                                    WorldContextSeedData seeder,
+                                    IHostingEnvironment env)
         {
             // Middleware - called sequentially, order is important!!
-            // LOGGING - For systems logs
-            loggerFactory.AddDebug(LogLevel.Warning);
+
+            if (env.IsDevelopment())
+            {
+                // LOGGING - For systems logs
+                loggerFactory.AddDebug(LogLevel.Information);
+            }
+            else
+            {
+                loggerFactory.AddDebug(LogLevel.Error);
+            }
+
+
             // STATIC FILES - For serving static files e.g. src="~/css/site.css"
             app.UseStaticFiles();
             // AUTOMAPPER - Using AutoMapper NuGet package to map viewmodels to models in our controller - notably the API
